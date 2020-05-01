@@ -4,6 +4,7 @@ import "./styles/BadgeNew.css"
 import header from "../images/badge-header.svg"
 import Badge from "../components/badge.js"
 import BadgeForm from "../components/BadgeForm.js"
+import api from "./api"
 
 class BadgeNew extends React.Component {
     state = {form: {
@@ -23,6 +24,18 @@ class BadgeNew extends React.Component {
         })
     }
 
+    handleSubmit = async e => {
+        e.preventDefault();
+        this.setState({ loading: false, error: null })
+
+        try {
+            await api.badges.create(this.state.form)
+            this.setState({ loading: false })
+        } catch (error) {
+            this.setState({ loading: false, error: error })
+        }
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -37,12 +50,13 @@ class BadgeNew extends React.Component {
                         lastName={this.state.form.lastName}  //Y aqui mi apellido "Hernandez"
                         email = {this.state.form.email}
                         jobTitle = {this.state.form.jobTitle}
-                        instagram = {this.state.form.instagram}
+                        instagram = {this.state.form.instagram || "Your Instagram"} 
                         />
                         </div>  
                         <div className="col-6">
                             <BadgeForm
                             onChange={this.handleChange}
+                            onSubmit={this.handleSubmit}
                             formValues={this.state.form}
                             /> 
                         </div>

@@ -1,16 +1,14 @@
 import React from "react";
 
 class BadgeForm extends React.Component {
-    //state = {}; //Pasamos los input a controlados con este ||state = {}|| si quisieramos mantener la información en este compoennte ||BadgeForm||
-
     handleChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
 
-        // console.log({
-        //     name: event.target.name,
-        //     value: event.target.value,
-        // })
+        /*console.log({
+            name: event.target.name,
+            value: event.target.value,
+        })*/
         })        
     }
 
@@ -18,17 +16,12 @@ class BadgeForm extends React.Component {
         console.log("Button was clicked")
     }
 
-    handleSubmit = (event) => { //Enlazar eventos, conectando la acción del usuario con nuestros componentes de React
-        event.preventDefault(); //El default es mandar la información del form a la URL directamente
-        console.log("Form was submit")
-        console.log(this.state)
-    }
 
     render() {
         return (
             <div>
                 <h1>NEW ATTENDANT</h1>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.props.onSubmit}>
                     <div className="form-group">
                         <label>First Name</label>
                         <input onChange={this.props.onChange} 
