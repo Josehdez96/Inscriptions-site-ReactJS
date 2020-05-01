@@ -1,7 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom"
 
-import "../components/styles/Badge.css"
+import "../components/styles/BadgesList.css"
+import Gravatar from "./Gravatar"
+
+class BadgesListItem extends React.Component {
+    render () {
+      return (
+      <div className="BadgesListItem">
+          <Gravatar className="BadgesListItem__avatar" email={this.props.badge.email}/>
+              <div>
+                  <h5 className="font-weight-bold">{this.props.badge.firstName} {this.props.badge.lastName}</h5>
+                  <p className="Badge_section-twitter">@{this.props.badge.twitter}</p>
+                  <p className="Badge_section-jobTitle">{this.props.badge.jobTitle}</p>
+              </div>
+      </div>
+      )
+    }
+  }
+
 
 class BadgesList extends React.Component {
     render() {
@@ -16,29 +33,23 @@ class BadgesList extends React.Component {
             )
         }
         return (
+            <div className="BadgesList">
                 <ul className="list-unstyled">
-                    {this.props.badges.map((badge) => {
-                        return (                        
-                                <li key={badge.id} /*Se hace para evitar Warning en la consola, pasamos un elemento unico, el ||key|| le ayuda a React a saber cuando renderiza*/>                            
-                                    <div className="BadgeList">                                        
-                                        <div className="Badge__section-nameList">
-                                            <img className="Badge__avatar"
-                                            src={badge.avatarUrl}
-                                            alt ="Imagen de Avatar"
-                                            />
-                                            <div>
-                                                <h5 className="font-weight-bold">{badge.firstName} {badge.lastName}</h5>
-                                                <p className="Badge_section-twitter">@{badge.twitter}</p>
-                                                <p className="Badge_section-jobTitle">{badge.jobTitle}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                        )
+                    {this.props.badges.map(badge => {
+                        return (
+                            //Se hace para evitar Warning en la consola, pasamos un elemento unico, el ||key|| le ayuda a React a saber cuando renderiza
+                            <li key={badge.id}>
+                                <Link className="text-reset text-decoration.none" to={`/badges/${badge.id}/edit`}>  
+                                    <BadgesListItem badge={badge} />
+                                </Link>
+                            </li>
+                        );
                     })}
                 </ul>
+            </div>
         )
     }
 }
+
 
 export default BadgesList;
