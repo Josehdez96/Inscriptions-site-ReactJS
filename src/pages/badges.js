@@ -22,6 +22,8 @@ class Badges extends React.Component {
 
     componentDidMount() {
       this.fetchData();
+
+      this.intervalId = setInterval(this.fetchData, 5000)
     }
 
     fetchData = async () => {
@@ -35,16 +37,16 @@ class Badges extends React.Component {
       }
     }
 
-    componentDidUpdate(prevProps, prevState) { //Se ejecuta despues de que el componentDidMount hace que se renderice la pagina nuevamente
+    componentDidUpdate(prevProps, prevState) { //Prueba: Se ejecuta despues de que el componentDidMount hace que se renderice la pagina nuevamente
 
     }
 
     componentWillUnmount() { //Se ejecuta en el momento exacto antes de que el componente desaparezca del DOM (antes de ir a otra pagina por ejemplo)
-      clearTimeout(this.timeoutId) //Liberación de memoria
+      clearInterval(this.intervalId) //Liberación de memoria
     }
 
     render() {
-      if (this.state.loading) {
+      if (this.state.loading && !this.state.data) {
         return <PageLoading />
       }
 
@@ -73,9 +75,9 @@ class Badges extends React.Component {
                     </div>
                     <div className="Badges__list">
                         <div className="Badges__container">
-                            <BadgesList 
-                            badges={this.state.data} //Pasando como parametro
-                            />                            
+                            <BadgesList badges={this.state.data} /> 
+
+                            {this.state.loading && "Loading..."}                           
                         </div>
                     </div>
                 </div>
