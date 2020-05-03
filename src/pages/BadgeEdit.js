@@ -46,7 +46,7 @@ class BadgeEdit extends React.Component {
         })
     }
 
-    handleSubmit = async e => {
+    handleSubmit = async (e) => {
         e.preventDefault();
         this.setState({ loading: true, error: null })
 
@@ -77,7 +77,7 @@ class BadgeEdit extends React.Component {
                     <div className="row">
                         <div className="col-6">
                         <Badge 
-                        firstName={this.state.form.firstName} //O puedo ponerle mi nombre "Jose Daniel" si quiero
+                        firstName={this.state.form.firstName} //O puedo ponerle mi nombre quemado o hardcodeado "Jose Daniel" si quiero
                         lastName={this.state.form.lastName}  //Y aqui mi apellido "Hernandez"
                         email = {this.state.form.email}
                         jobTitle = {this.state.form.jobTitle}

@@ -19,13 +19,43 @@ class BadgesListItem extends React.Component {
     }
   }
 
+  function useSearchBadges(badges) {
+    const [ query, setQuery ] = React.useState("");
+    const [ filteredBadges, setFilteredBadges ] = React.useState(badges)
 
-class BadgesList extends React.Component {
-    render() {
-        if (this.props.badges.length === 0) {
+    React.useMemo(() => { //Para no tener que hacer la busqueda cada que escriban, si no, usar cache, usamos useMemo(__funcion__, que_variable_cambia_para_calcular_todo_de_nuevo)
+        const result = badges.filter(badge => {
+        return `${badge.firstName} ${badge.lastName}`
+        .toLowerCase()
+        .includes(query.toLowerCase());
+        })  
+
+        setFilteredBadges(result)
+    }, [ badges, query ]);
+
+    return { query, setQuery, filteredBadges }
+  }
+
+
+function  BadgesList (props) {
+    const badges = props.badges;
+
+    const { query, setQuery, filteredBadges } = useSearchBadges(badges) 
+    
+
+        if (filteredBadges.length === 0) {
             return (
                 <div>
                     <h3>No badges were found</h3>
+                        <div className="form-group">
+                            <label>Filter badges</label>
+                            <input type="text" className="form-control" 
+                            value={query}
+                            onChange={(e) => {
+                                setQuery(e.target.value)
+                            }}
+                            />
+                    </div>
                     <Link className="btn btn-primary" to="/badges/new">
                         Create new badge
                     </Link>
@@ -34,8 +64,17 @@ class BadgesList extends React.Component {
         }
         return (
             <div className="BadgesList">
+                <div className="form-group">
+                    <label>Filter badges</label>
+                    <input type="text" className="form-control" 
+                    value={query}
+                    onChange={(e) => {
+                        setQuery(e.target.value)
+                    }}
+                    />
+                </div>
                 <ul className="list-unstyled">
-                    {this.props.badges.map(badge => {
+                    {filteredBadges.map(badge => {
                         return (
                             //Se hace para evitar Warning en la consola, pasamos un elemento unico, el ||key|| le ayuda a React a saber cuando renderiza
                             <li key={badge.id}>
@@ -48,7 +87,6 @@ class BadgesList extends React.Component {
                 </ul>
             </div>
         )
-    }
 }
 
 
