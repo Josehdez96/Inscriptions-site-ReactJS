@@ -39,7 +39,7 @@ class BadgesList extends React.Component {
                         return (
                             //Se hace para evitar Warning en la consola, pasamos un elemento unico, el ||key|| le ayuda a React a saber cuando renderiza
                             <li key={badge.id}>
-                                <Link className="text-reset text-decoration.none" to={`/badges/${badge.id}/edit`}>  
+                                <Link className="text-reset text-decoration.none" to={`/badges/${badge.id}`}>  
                                     <BadgesListItem badge={badge} />
                                 </Link>
                             </li>

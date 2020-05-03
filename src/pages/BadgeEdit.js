@@ -24,14 +24,13 @@ class BadgeEdit extends React.Component {
         this.fetchData()
     }
 
-    fetchData = async e => {
+    fetchData = async () => {
         this.setState({ loading: true, error: null })
 
         try {
             const data = await api.badges.read(
                 this.props.match.params.badgeId //Sirve para leer los parametros que pasamos por el path o URL
-            )
-            
+            )            
             this.setState({ loading: false, form: data })
         } catch (error) {
             this.setState({ loading: false, error: error })
