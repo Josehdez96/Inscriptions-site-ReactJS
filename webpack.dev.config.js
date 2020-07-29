@@ -1,19 +1,22 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const webpack = require("webpack");
+const path = require('path');
+const webpack = require('webpack');
+
+const { PORT } = process.env;
 
 module.exports = {
-  entry: {
-    app: path.resolve(__dirname, "src/index.js"),
-  },
+  entry: [
+    './src/frontend/index.js',
+    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=2000&reload_true',
+  ],
+  mode: 'development',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "js/[name].js",
-    publicPath: "http://localhost:9000/",
-    chunkFilename: "js/[id].[chunkhash].js",
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'assets/app.js',
+    publicPath: `http://localhost:${PORT}/`,
+    chunkFilename: 'js/[id].[chunkhash].js',
   },
   devServer: {
-    contentBase: path.resolve(__dirname, "dist"),
+    contentBase: path.resolve(__dirname, 'dist'),
     open: true,
     port: 9000,
     hot: true,
@@ -22,28 +25,23 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: "babel-loader",
+        use: 'babel-loader',
         exclude: /node_modules/,
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.jpg|png|gif|woff|eot|ttf|svg|mp4|webm$/,
         use: {
-          loader: "file-loader",
+          loader: 'file-loader',
           options: {
-            outputPath: "assets/",
+            outputPath: 'assets/',
           },
         },
       },
     ],
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "public/index.html"),
-    }),
-  ],
+  plugins: [new webpack.HotModuleReplacementPlugin()],
 };
