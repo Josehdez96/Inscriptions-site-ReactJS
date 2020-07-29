@@ -32,7 +32,7 @@ const routes = [
     component: BadgeEdit,
   },
   {
-    name: 'NotFound'
+    name: 'NotFound',
     component: NotFound,
   },
 ];

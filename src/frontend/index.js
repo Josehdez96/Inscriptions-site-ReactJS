@@ -14,7 +14,7 @@ const history = createBrowserHistory();
 const container = document.getElementById('app');
 
 //ReactDOM.render(__qué__, __dónde__) //||que|| queremos renderizar y ||donde||
-ReactDOM.render(
+ReactDOM.hydrate(
   <Router history={history}>
     <App />
   </Router>,

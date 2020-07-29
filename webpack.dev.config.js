@@ -1,3 +1,5 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ExtractCssChunks = require('extract-css-chunks-webpack-plugin');
 const path = require('path');
 const webpack = require('webpack');
 
@@ -30,7 +32,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [ExtractCssChunks.loader, 'css-loader'],
       },
       {
         test: /\.jpg|png|gif|woff|eot|ttf|svg|mp4|webm$/,
@@ -43,5 +45,13 @@ module.exports = {
       },
     ],
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'assets/app.css',
+    }),
+    new ExtractCssChunks({
+      filename: 'assets/app.css',
+    }),
+  ],
 };
