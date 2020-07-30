@@ -41,6 +41,7 @@ if (ENV === 'development') {
 const setResponse = (html, manifest) => {
   const mainStyles = manifest ? manifest['main.css'] : 'assets/app.css';
   const mainBuild = manifest ? manifest['main.js'] : 'assets/app.js';
+  const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
 
   return `
   <!DOCTYPE html>
@@ -48,13 +49,14 @@ const setResponse = (html, manifest) => {
     <head>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-      <link rel='stylesheet' href='${mainStyles}' type='text/css'>
+      <link rel="stylesheet" href="${mainStyles}" type="text/css">
       <title>Platzi Badges</title>
     </head>  
     <body>
       <div id="app">${html}</div>
       <div id="modal"></div>
       <script src="${mainBuild}" type="text/javascript"></script>
+      <script src="${vendorBuild}" type="text/javascript"></script>
     </body>  
   </html>
   `;
